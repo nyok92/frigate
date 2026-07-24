@@ -75,6 +75,10 @@ if [[ "${TARGETARCH}" == "arm64" ]]; then
     wget -qO ffmpeg.tar.xz "https://github.com/NickM-27/FFmpeg-Builds/releases/download/autobuild-2026-06-02-14-20/ffmpeg-n8.1.1-9-g58d4114d36-linuxarm64-gpl-8.1.tar.xz"
     tar -xf ffmpeg.tar.xz -C /usr/lib/ffmpeg/8.0 --strip-components 1 arm64/bin/ffmpeg arm64/bin/ffprobe
     rm -f ffmpeg.tar.xz
+    mkdir -p /usr/lib/ffmpeg/9.0
+    wget -qO ffmpeg.tar.gz "https://code.ffmpeg.org/Kwiboo/FFmpeg/archive/v4l2request-v3.tar.gz"
+    tar -xzvf ffmpeg.tar.gz -C /usr/lib/ffmpeg/9.0 --strip-components 1 arm64/bin/ffmpeg arm64/bin/ffprobe
+    rm -rf ffmpeg.tar.gz
 fi
 
 # arch specific packages
