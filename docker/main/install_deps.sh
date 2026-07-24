@@ -82,9 +82,9 @@ if [[ "${TARGETARCH}" == "arm64" ]]; then
     tar -xf ffmpeg.tar.xz -C /usr/lib/ffmpeg/8.0 --strip-components 1 arm64/bin/ffmpeg arm64/bin/ffprobe
     rm -f ffmpeg.tar.xz
     mkdir -p /usr/lib/ffmpeg/9.0
-    wget -qO ffmpeg.tar.gz "https://code.ffmpeg.org/Kwiboo/FFmpeg/archive/v4l2request-v3.tar.gz"
-    tar -xzvf ffmpeg.tar.gz -C /usr/lib/ffmpeg/9.0 --strip-components 1 arm64/bin/ffmpeg arm64/bin/ffprobe
-    rm -rf ffmpeg.tar.gz
+    wget -qO ffmpeg.zip "https://github.com/jimmyhon/frigate-builds/releases/download/ffmpeg-8.0.1/ffmpeg.zip"
+    unzip ffmpeg.zip -C /usr/lib/ffmpeg/9.0 --strip-components 1 ffmpeg ffprobe
+    rm -rf ffmpeg.zip
 fi
 
 # arch specific packages
