@@ -86,7 +86,7 @@ if [[ "${TARGETARCH}" == "arm64" ]]; then
     wget -qO ffmpeg.zip "https://github.com/jimmyhon/frigate-builds/releases/download/ffmpeg-8.0.1/ffmpeg.zip"
     unzip ffmpeg.zip 
     mv ffmpeg /usr/lib/ffmpeg/9.0/ffmpeg
-    mv ffprobeg /usr/lib/ffmpeg/9.0/ffprobe
+    mv ffprobe /usr/lib/ffmpeg/9.0/ffprobe
     cd ..
     rm -rf ffmpeg.zip
 fi
