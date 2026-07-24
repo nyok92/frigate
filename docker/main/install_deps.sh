@@ -49,7 +49,7 @@ rm /tmp/libedgetpu1-max.deb
 # Only available for arm64 at the moment
 if [[ "${TARGETARCH}" == "arm64" ]]; then
     wget -qO /usr/lib/teflon/libteflon.so https://github.com/jimmyhon/frigate-builds/releases/download/mesa-26.1.5/libteflon.so
-
+fi
 
 # ffmpeg -> amd64
 if [[ "${TARGETARCH}" == "amd64" ]]; then
