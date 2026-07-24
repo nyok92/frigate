@@ -35,15 +35,21 @@ rm /tmp/libedgetpu1-max.deb
 
 # install mesa-teflon-delegate from bookworm-backports
 # Only available for arm64 at the moment
+#if [[ "${TARGETARCH}" == "arm64" ]]; then
+#    if [[ "${BASE_IMAGE}" == *"nvcr.io/nvidia/tensorrt"* ]]; then
+#        echo "Info: Skipping apt-get commands because BASE_IMAGE includes 'nvcr.io/nvidia/tensorrt' for arm64."
+#    else
+#        echo "deb http://deb.debian.org/debian bookworm-backports main" | tee /etc/apt/sources.list.d/bookworm-backbacks.list
+#        apt-get -qq update
+#        apt-get -qq install --no-install-recommends --no-install-suggests -y mesa-teflon-delegate/bookworm-backports
+#    fi
+#fi
+
+# install mesa-teflon-delegate
+# Only available for arm64 at the moment
 if [[ "${TARGETARCH}" == "arm64" ]]; then
-    if [[ "${BASE_IMAGE}" == *"nvcr.io/nvidia/tensorrt"* ]]; then
-        echo "Info: Skipping apt-get commands because BASE_IMAGE includes 'nvcr.io/nvidia/tensorrt' for arm64."
-    else
-        echo "deb http://deb.debian.org/debian bookworm-backports main" | tee /etc/apt/sources.list.d/bookworm-backbacks.list
-        apt-get -qq update
-        apt-get -qq install --no-install-recommends --no-install-suggests -y mesa-teflon-delegate/bookworm-backports
-    fi
-fi
+    wget -qO /usr/lib/teflon/libteflon.so https://github.com/jimmyhon/frigate-builds/releases/download/mesa-26.1.5/libteflon.so
+
 
 # ffmpeg -> amd64
 if [[ "${TARGETARCH}" == "amd64" ]]; then
