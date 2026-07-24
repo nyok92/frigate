@@ -11,7 +11,7 @@ apt-get -qq install --no-install-recommends -y \
     wget \
     lbzip2 \
     procps vainfo \
-    unzip locales tzdata libxml2 xz-utils \
+    unzip bsdtar locales tzdata libxml2 xz-utils \
     python3.11 \
     curl \
     lsof \
@@ -84,10 +84,7 @@ if [[ "${TARGETARCH}" == "arm64" ]]; then
     rm -f ffmpeg.tar.xz
     mkdir -p /usr/lib/ffmpeg/9.0
     wget -qO ffmpeg.zip "https://github.com/jimmyhon/frigate-builds/releases/download/ffmpeg-8.0.1/ffmpeg.zip"
-    unzip ffmpeg.zip 
-    cd /ffmpeg
-    cp -r . /usr/lib/ffmpeg/9.0
-    cd ..
+    bsdtar xvf ffmpeg.zip -C /usr/lib/ffmpeg/9.0 --strip-components 1 ffmpeg ffprobe
     rm -rf ffmpeg.zip
 fi
 
