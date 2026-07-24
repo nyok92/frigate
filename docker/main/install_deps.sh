@@ -48,6 +48,7 @@ rm /tmp/libedgetpu1-max.deb
 # install mesa-teflon-delegate
 # Only available for arm64 at the moment
 if [[ "${TARGETARCH}" == "arm64" ]]; then
+    mkdir -p /usr/lib/teflon
     wget -qO /usr/lib/teflon/libteflon.so https://github.com/jimmyhon/frigate-builds/releases/download/mesa-26.1.5/libteflon.so
 fi
 
