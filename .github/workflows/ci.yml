@@ -21,6 +21,9 @@ jobs:
   arm64_build:
     runs-on: ubuntu-22.04-arm
     name: ARM Build
+    permissions:
+      contents: read
+      packages: write
     steps:
       - name: Check out code
         uses: actions/checkout@v6
@@ -45,6 +48,9 @@ jobs:
   assemble_default_build:
     runs-on: ubuntu-22.04
     name: Assemble and push default build
+    permissions:
+      contents: read
+      packages: write
     needs:
       - arm64_build
     steps:
