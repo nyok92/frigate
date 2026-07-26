@@ -88,6 +88,8 @@ if [[ "${TARGETARCH}" == "arm64" ]]; then
     unzip ffmpeg.zip 
     mv ffmpeg /config/custom_ffmpeg/bin/ffmpeg
     mv ffprobe /config/custom_ffmpeg/bin/ffprobe
+    chmod +x
+    chmod +x 
     rm -rf ffmpeg.zip
 fi
 
