@@ -21,7 +21,8 @@ apt-get -qq install --no-install-recommends -y \
     libglib2.0-0 \
     libusb-1.0.0 \
     python3-h2 \
-    libgomp1  # memryx detector
+    libgomp1 \ # memryx detector
+    v4l-utils
 
 update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.11 1
 
