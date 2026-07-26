@@ -83,13 +83,13 @@ if [[ "${TARGETARCH}" == "arm64" ]]; then
     wget -qO ffmpeg.tar.xz "https://github.com/NickM-27/FFmpeg-Builds/releases/download/autobuild-2026-06-02-14-20/ffmpeg-n8.1.1-9-g58d4114d36-linuxarm64-gpl-8.1.tar.xz"
     tar -xf ffmpeg.tar.xz -C /usr/lib/ffmpeg/8.0 --strip-components 1 arm64/bin/ffmpeg arm64/bin/ffprobe
     rm -f ffmpeg.tar.xz
-    mkdir -p /tmp/custom_ffmpeg/bin
+    mkdir -p /usr/lib/custom_ffmpeg/bin
     wget -qO ffmpeg.zip "https://github.com/jimmyhon/frigate-builds/releases/download/ffmpeg-8.0.1/ffmpeg.zip"
     unzip ffmpeg.zip 
-    mv ffmpeg /tmp/custom_ffmpeg/bin/ffmpeg
-    mv ffprobe /tmp/custom_ffmpeg/bin/ffprobe
-    chmod +x /tmp/custom_ffmpeg/bin/ffmpeg
-    chmod +x /tmp/custom_ffmpeg/bin/ffprobe
+    mv ffmpeg /usr/lib/custom_ffmpeg/bin/ffmpeg
+    mv ffprobe /usr/lib/custom_ffmpeg/bin/ffprobe
+    chmod +x /usr/lib/custom_ffmpeg/bin/ffmpeg
+    chmod +x /usr/lib/custom_ffmpeg/bin/ffprobe
     rm -rf ffmpeg.zip
 fi
 
