@@ -12,7 +12,8 @@
     "motionTuner": "Rörelsejustering - Frigate",
     "object": "Felsökning - Frigate",
     "cameraManagement": "Hantera kameror - Frigate",
-    "cameraReview": "Kameragranskningsinställningar - Frigate"
+    "cameraReview": "Kameragranskningsinställningar - Frigate",
+    "profiles": "Profiler - Frigate"
   },
   "general": {
     "title": "Inställningar för användargränssnittet",
@@ -63,7 +64,7 @@
     },
     "toast": {
       "success": {
-        "clearStoredLayout": "Den lagrade layouten för {{cameraName}} har rensats.",
+        "clearStoredLayout": "Den lagrade layouten för {{cameraName}} har rensats",
         "clearStreamingSettings": "Strömningsinställningarna för alla kameragrupper har rensats."
       },
       "error": {
@@ -146,13 +147,26 @@
     "notifications": "Aviseringar",
     "frigateplus": "Frigate+",
     "enrichments": "Berikningar",
-    "motionTuner": "Rörelsejustering",
+    "motionTuner": "Rörelsemottagare",
     "debug": "Felsökning",
     "triggers": "Utlösare",
     "roles": "Roller",
     "cameraManagement": "Kamerahantering",
     "cameraReview": "Granskning",
-    "profiles": "Profiler"
+    "profiles": "Profiler",
+    "maintenance": "Underhåll",
+    "cameraObjects": "Föremål",
+    "cameraUi": "Kameragränssnitt",
+    "cameraFaceRecognition": "Ansiktsigenkänning",
+    "cameraRecording": "Inspelning",
+    "cameraAudioTranscription": "Ljudtranskription",
+    "cameraNotifications": "Notifiering",
+    "cameraBirdseye": "Fågelöga",
+    "cameraMqttConfig": "MQTT",
+    "cameraOnvif": "ONVIF",
+    "cameraTimestampStyle": "Tidsstämpelstil",
+    "systemEnvironmentVariables": "Miljövariabler",
+    "systemTelemetry": "Telemetri"
   },
   "dialog": {
     "unsavedChanges": {
@@ -1239,6 +1253,14 @@
       "toast": {
         "success": "Konfigurationen för granskning av klassificering har sparats. Starta om Frigate för att tillämpa ändringarna."
       }
+    }
+  },
+  "saveAllPreview": {
+    "value": {
+      "reset": "Återställ"
+    },
+    "field": {
+      "label": "Fält"
     }
   }
 }
