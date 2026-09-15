@@ -55,7 +55,7 @@ export function runnerNames(models: DetectionModelConfig[]): string[] {
 export const PROBED_DETECTORS = new Set([
   "cpu",
   "edgetpu",
-  "hailo8l",
+  "hailo",
   "memryx",
   "openvino",
   "onnx",
@@ -256,12 +256,7 @@ export function detectionRows({
 // ------------------------------------------------------------------ hwaccel
 
 export type HwaccelFamilyKey =
-  | "nvidia"
-  | "vaapi"
-  | "intel-qsv"
-  | "rkmpp"
-  | "jetson"
-  | "rpi";
+  "nvidia" | "vaapi" | "intel-qsv" | "rkmpp" | "jetson" | "rpi";
 
 export type HwaccelClass =
   | { kind: "none" }

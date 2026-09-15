@@ -316,7 +316,11 @@ export default function ZoneEditPane({
     return profileZone ?? cam.zones[polygon.name];
   }, [polygon, config, editingProfile]);
 
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<
+    z.input<typeof formSchema>,
+    unknown,
+    z.output<typeof formSchema>
+  >({
     resolver: zodResolver(formSchema),
     mode: "onChange",
     defaultValues: {
@@ -396,7 +400,7 @@ export default function ZoneEditPane({
         ? `cameras.${polygon.camera}.profiles.${editingProfile}.zones.${polygon.name}`
         : `cameras.${polygon.camera}.zones.${polygon.name}`;
 
-      let mutatedConfig = config;
+      let mutatedConfig: typeof config;
       let alertQueries = "";
       let detectionQueries = "";
 
@@ -404,9 +408,6 @@ export default function ZoneEditPane({
 
       if (renamingZone) {
         // rename - delete old zone and replace with new
-        let renameAlertQueries = "";
-        let renameDetectionQueries = "";
-
         // Only handle review queries for base config (not profiles)
         if (!editingProfile) {
           const zoneInAlerts =
@@ -417,7 +418,7 @@ export default function ZoneEditPane({
               polygon.name,
             ) ?? false;
 
-          ({
+          const {
             alertQueries: renameAlertQueries,
             detectionQueries: renameDetectionQueries,
           } = reviewQueries(
@@ -427,7 +428,7 @@ export default function ZoneEditPane({
             polygon.camera,
             cameraConfig?.review.alerts.required_zones || [],
             cameraConfig?.review.detections.required_zones || [],
-          ));
+          );
 
           try {
             await axios.put(
@@ -591,7 +592,6 @@ export default function ZoneEditPane({
         });
     },
     [
-      config,
       updateConfig,
       polygon,
       scaledWidth,
@@ -605,7 +605,7 @@ export default function ZoneEditPane({
     ],
   );
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: z.output<typeof formSchema>) {
     if (activePolygonIndex === undefined || !values || !polygons) {
       return;
     }

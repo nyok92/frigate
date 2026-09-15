@@ -20,11 +20,7 @@ export interface BirdseyeConfig {
 }
 
 export type BirdseyeMode =
-  | "continuous"
-  | "motion"
-  | "all_objects"
-  | "alerts"
-  | "detections";
+  "continuous" | "motion" | "all_objects" | "alerts" | "detections";
 
 export interface FaceRecognitionConfig {
   enabled: boolean;
@@ -429,6 +425,8 @@ export type DetectionModelConfig = {
     baseModel: string;
     isBaseModel: boolean;
     supportedDetectors: string[];
+    // which Hailo device a Hailo model was built for, absent on every other model
+    hailoDevice?: string;
     width: number;
     height: number;
   } | null;
