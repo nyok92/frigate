@@ -30,8 +30,6 @@ export type HiddenFieldEntry = string | ((ctx: HiddenFieldContext) => string[]);
 export type ConfigFormContext = {
   level?: "global" | "camera";
   cameraName?: string;
-  /** Config section being edited, e.g. "audio" or "review". */
-  sectionPath?: string;
   globalValue?: JsonValue;
   cameraValue?: JsonValue;
   overrides?: JsonValue;

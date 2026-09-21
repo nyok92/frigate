@@ -1022,7 +1022,6 @@ export function ConfigSection({
             formContext={{
               level: effectiveLevel,
               cameraName,
-              sectionPath,
               globalValue,
               cameraValue,
               hasChanges,

@@ -7,10 +7,6 @@ const review: SectionConfigOverrides = {
       {
         key: "record-disabled",
         messageKey: "configMessages.review.recordDisabled",
-        runtimeOverride: {
-          section: "record",
-          messageKey: "configMessages.review.recordRuntimeDisabled",
-        },
         severity: "warning",
         condition: (ctx) => {
           if (ctx.level === "camera" && ctx.fullCameraConfig) {
@@ -22,10 +18,6 @@ const review: SectionConfigOverrides = {
       {
         key: "detect-disabled",
         messageKey: "configMessages.review.detectDisabled",
-        runtimeOverride: {
-          section: "detect",
-          messageKey: "configMessages.review.detectRuntimeDisabled",
-        },
         severity: "info",
         condition: (ctx) => {
           if (ctx.level === "camera" && ctx.fullCameraConfig) {
@@ -72,11 +64,6 @@ const review: SectionConfigOverrides = {
         field: "genai.image_source",
         messageKey:
           "configMessages.review.genaiImageSourceRecordingsRecordDisabled",
-        runtimeOverride: {
-          section: "record",
-          messageKey:
-            "configMessages.review.genaiImageSourceRecordingsRecordRuntimeDisabled",
-        },
         severity: "warning",
         position: "after",
         condition: (ctx) => {

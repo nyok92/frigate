@@ -7,16 +7,6 @@ export type KeyModifiers = {
   shift: boolean;
 };
 
-const handledByShortcut = new WeakSet<Event>();
-
-// Radix dismisses a dialog or menu on Escape from a capture-phase listener and
-// calls preventDefault() without stopping propagation, so a page shortcut would
-// otherwise act on the same press. Keys another shortcut hook handled still get
-// through, since their listener order changes with every render.
-function handledElsewhere(event: KeyboardEvent): boolean {
-  return event.defaultPrevented && !handledByShortcut.has(event);
-}
-
 export default function useKeyboardListener(
   keys: string[],
   listener?: (key: string | null, modifiers: KeyModifiers) => boolean,
@@ -34,10 +24,6 @@ export default function useKeyboardListener(
     (e: KeyboardEvent) => {
       // @ts-expect-error we know this field exists
       if (!e || e.target.tagName == "INPUT") {
-        return;
-      }
-
-      if (handledElsewhere(e)) {
         return;
       }
 
@@ -77,10 +63,7 @@ export default function useKeyboardListener(
         }
       } else if (keys.includes(e.key) && listener) {
         const preventDefault = listener(e.key, modifiers);
-        if (preventDefault) {
-          e.preventDefault();
-          handledByShortcut.add(e);
-        }
+        if (preventDefault) e.preventDefault();
       } else if (
         listener &&
         (e.key === "Shift" || e.key === "Control" || e.key === "Meta")

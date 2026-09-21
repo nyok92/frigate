@@ -24,8 +24,6 @@ import HealthMetrics from "@/views/system/HealthMetrics";
 import NoticeFilterButton from "@/components/health/NoticeFilterButton";
 import { DEFAULT_NOTICE_FILTER, NoticeFilter } from "@/types/health";
 import { useTranslation } from "react-i18next";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { cn } from "@/lib/utils";
 
 const allMetrics = [
   "health",
@@ -98,43 +96,35 @@ function System() {
         {isMobile && (
           <Logo className="absolute inset-x-1/2 h-8 -translate-x-1/2" />
         )}
-        <ScrollArea className={cn("whitespace-nowrap", isMobile && "w-[45%]")}>
-          <div className="flex flex-row">
-            <ToggleGroup
-              className="*:rounded-md *:px-3 *:py-4"
-              type="single"
-              size="sm"
-              value={pageToggle}
-              onValueChange={(value: SystemMetric) => {
-                if (value) {
-                  setPageToggle(value);
-                }
-              }} // don't allow the severity to be unselected
+        <ToggleGroup
+          className="*:rounded-md *:px-3 *:py-4"
+          type="single"
+          size="sm"
+          value={pageToggle}
+          onValueChange={(value: SystemMetric) => {
+            if (value) {
+              setPageToggle(value);
+            }
+          }} // don't allow the severity to be unselected
+        >
+          {Object.values(metrics).map((item) => (
+            <ToggleGroupItem
+              key={item}
+              className={`flex items-center justify-between gap-2 ${pageToggle == item ? "" : "*:text-muted-foreground"}`}
+              value={item}
+              aria-label={`Select ${item}`}
             >
-              {Object.values(metrics).map((item) => (
-                <ToggleGroupItem
-                  key={item}
-                  className={`flex items-center justify-between gap-2 ${pageToggle == item ? "" : "*:text-muted-foreground"}`}
-                  value={item}
-                  aria-label={t("selectItem", {
-                    ns: "common",
-                    item: t(item + ".title"),
-                  })}
-                >
-                  {item == "health" && <LuHeartPulse className="size-4" />}
-                  {item == "general" && <LuActivity className="size-4" />}
-                  {item == "enrichments" && <LuSearchCode className="size-4" />}
-                  {item == "storage" && <LuHardDrive className="size-4" />}
-                  {item == "cameras" && <FaVideo className="size-4" />}
-                  {isDesktop && (
-                    <div className="smart-capitalize">{t(item + ".title")}</div>
-                  )}
-                </ToggleGroupItem>
-              ))}
-            </ToggleGroup>
-            <ScrollBar orientation="horizontal" className="h-0" />
-          </div>
-        </ScrollArea>
+              {item == "health" && <LuHeartPulse className="size-4" />}
+              {item == "general" && <LuActivity className="size-4" />}
+              {item == "enrichments" && <LuSearchCode className="size-4" />}
+              {item == "storage" && <LuHardDrive className="size-4" />}
+              {item == "cameras" && <FaVideo className="size-4" />}
+              {isDesktop && (
+                <div className="smart-capitalize">{t(item + ".title")}</div>
+              )}
+            </ToggleGroupItem>
+          ))}
+        </ToggleGroup>
 
         <div className="flex h-full items-center">
           {pageToggle == "health" && (
@@ -145,7 +135,7 @@ function System() {
           )}
           {lastUpdated && pageToggle != "health" && (
             <div className="h-full content-center text-sm text-muted-foreground">
-              {isDesktop && t("lastRefreshed")}
+              {t("lastRefreshed")}
               <TimeAgo time={lastUpdated * 1000} dense />
             </div>
           )}

@@ -7,10 +7,6 @@ const snapshots: SectionConfigOverrides = {
       {
         key: "detect-disabled",
         messageKey: "configMessages.snapshots.detectDisabled",
-        runtimeOverride: {
-          section: "detect",
-          messageKey: "configMessages.snapshots.detectRuntimeDisabled",
-        },
         severity: "info",
         condition: (ctx) => {
           if (ctx.level !== "camera" || !ctx.fullCameraConfig) return false;
