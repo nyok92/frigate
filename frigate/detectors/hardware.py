@@ -273,16 +273,6 @@ def detect_memryx() -> DetectionHardware | None:
     return _hardware("memryx", "memryx", "MemryX MX3", units)
 
 
-def detect_deepx() -> DetectionHardware | None:
-    """Find DEEPX NPUs by their device nodes."""
-    units = _dev_units("dxrt*", "deepx:PCIe:{index}", "PCIe")
-
-    if not units:
-        return None
-
-    return _hardware("deepx", "deepx", "DEEPX NPU", units)
-
-
 def detect_rockchip() -> DetectionHardware | None:
     """Find a Rockchip NPU by reading the SoC from the device tree."""
     compatible = _read(f"{PROC_ROOT}/device-tree/compatible")
@@ -329,7 +319,6 @@ PROBES = (
     detect_coral_usb,
     detect_hailo,
     detect_memryx,
-    detect_deepx,
     detect_intel_npu,
     detect_intel_gpu,
     detect_nvidia_gpu,
