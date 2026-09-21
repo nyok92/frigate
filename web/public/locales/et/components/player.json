@@ -16,6 +16,14 @@
       "title": "Ribalaius:",
       "short": "Ribalaius"
     },
+    "latency": {
+      "title": "Latentsus:",
+      "value": "{{seconds}} sekundit",
+      "short": {
+        "title": "Latentsus",
+        "value": "{{seconds}} sek"
+      }
+    },
     "totalFrames": "Kaadreid kokku:",
     "droppedFrames": {
       "title": "Vahelejäänud kaadreid:",
@@ -37,23 +45,8 @@
       "submittedFrigatePlus": "Kaadri saatmine Frigate+ teenusesse õnnestus"
     },
     "error": {
-      "submitFrigatePlusFailed": "Kaadri saatmine Frigate+ teenusesse ei õnnestunud",
-      "playRecordingsFailed": "Salvestiste esitamine ei õnnestunud (viga {{code}}): {{message}}"
+      "submitFrigatePlusFailed": "Kaadri saatmine Frigate+ teenusesse ei õnnestunud"
     }
   },
-  "cameraOff": "Kaamera on lülitatud välja",
-  "quality": {
-    "auto": "Automaatne",
-    "autoLow": "Esita madala kvaliteediga (väiksem ribalaius)",
-    "autoLowCodec": "Esitamisel madala kvaliteediga (see brauser ei toeta algset vormingut)",
-    "autoLowSaveData": "Esitamisel madala kvaliteediga (säästab andmeruumi)",
-    "main": "Algne kvaliteet",
-    "sub": "Madal kvaliteet",
-    "notSupportedBrowser": "Pole selles brauseris toetatud",
-    "label": "Kvaliteet",
-    "noAudio": "Ilma heliribata",
-    "audioRate": "{{rate}} kHz heliriba",
-    "audioCodecRate": "{{codec}} {{rate}} kHz",
-    "noRecordings": "Sellest ajavahemikust pole salvestisi"
-  }
+  "cameraOff": "Kaamera on lülitatud välja"
 }

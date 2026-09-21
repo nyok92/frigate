@@ -44,15 +44,7 @@
         },
         "alerts": {
             "enabled": {
-                "label": "Luba häired",
-                "description": "Luba häirete loomine selle kaamera jaoks."
-            },
-            "labels": {
-                "label": "Häirete sildid",
-                "description": "Objektide sildid, mille alusel häiret luua (nt: auto, isik)."
-            },
-            "required_zones": {
-                "label": "Nõutavad tsoonid"
+                "label": "Luba häired"
             }
         }
     },

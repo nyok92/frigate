@@ -20,6 +20,14 @@
       "title": "Ταχύτητα:",
       "short": "Ταχύτητα"
     },
+    "latency": {
+      "title": "Καθυστέρηση:",
+      "value": "{{seconds}} δευτερόλεπτα",
+      "short": {
+        "title": "Καθυστέρηση",
+        "value": "{{seconds}} δευτερόλεπτα"
+      }
+    },
     "totalFrames": "Συνολικός αριθμός Καρέ:",
     "droppedFrames": {
       "title": "Απορριφθέντα καρέ:",

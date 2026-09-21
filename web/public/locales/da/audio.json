@@ -343,8 +343,5 @@
   "engine": "Motor",
   "light_engine": "Lille motor",
   "swing_music": "Swing musik",
-  "bluegrass": "Bluegrass",
-  "folk_music": "Folkemusik",
-  "echo": "Ekko",
-  "pulse": "Puls"
+  "bluegrass": "Bluegrass"
 }

@@ -17,6 +17,14 @@
       "title": "Larghezza di banda:",
       "short": "Larghezza di banda"
     },
+    "latency": {
+      "title": "Latenza:",
+      "value": "{{seconds}} secondi",
+      "short": {
+        "title": "Latenza",
+        "value": "{{seconds}} sec"
+      }
+    },
     "droppedFrames": {
       "title": "Fotogrammi persi:",
       "short": {

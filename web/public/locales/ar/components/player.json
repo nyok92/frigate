@@ -15,6 +15,10 @@
     "bandwidth": {
       "title": "العرض الترددي:",
       "short": "العرض الترددي"
+    },
+    "latency": {
+      "title": "التأخير:",
+      "value": "{{seconds}} ثانية"
     }
   },
   "streamOffline": {

@@ -159,10 +159,7 @@
     "savingAll": "Zapisywanie wszystkich…",
     "undoAll": "Cofnij wszystko",
     "retry": "Powtórz",
-    "resetToGlobal": "Przywróć ustawienie globalne",
-    "expand": "Rozwiń",
-    "collapse": "Zwiń",
-    "reload": "Odśwież"
+    "resetToGlobal": "Przywróć ustawienie globalne"
   },
   "menu": {
     "system": "System",
@@ -331,10 +328,5 @@
   "validation_errors": "Błędy walidacji",
   "credentialField": {
     "savedPlaceholder": "Zapisano — pozostaw puste, aby zachować bieżącą wartość"
-  },
-  "error": {
-    "title": "Strona nie odpowiada",
-    "desc": "Wystąpił nieoczekiwany błąd. Zazwyczaj wystarczy odświeżyć stronę. Jeśli problem będzie się powtarzaċ skopiuj szczegóły błędu i utwórz dyskusję na GitHubie.",
-    "staleTitle": "Wymagane odświeżenie"
   }
 }

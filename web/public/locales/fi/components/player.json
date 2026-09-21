@@ -21,6 +21,14 @@
       "title": "Kaistanleveys:",
       "short": "Kaistanleveys"
     },
+    "latency": {
+      "title": "Latenssi:",
+      "value": "{{seconds}} sekuntia",
+      "short": {
+        "value": "{{seconds}} sek",
+        "title": "Latenssi"
+      }
+    },
     "totalFrames": "Kehyksiä yhteensä:",
     "droppedFrames": {
       "title": "Pudotettuja kehyksiä:",

@@ -15,6 +15,14 @@
       "title": "Pasovna širina:",
       "short": "Pasovna širina"
     },
+    "latency": {
+      "value": "{{seconds}} sekund",
+      "title": "Zakasnitev:",
+      "short": {
+        "value": "{{seconds}} s",
+        "title": "Zakasnitev"
+      }
+    },
     "totalFrames": "Skupno število slik:",
     "droppedFrames": {
       "title": "Izpuščene slike:",
