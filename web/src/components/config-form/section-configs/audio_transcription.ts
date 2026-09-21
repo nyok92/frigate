@@ -45,6 +45,7 @@ const audioTranscription: SectionConfigOverrides = {
     fieldMessages: [
       {
         key: "genai-provider-ignores-local-settings",
+        health: (ctx) => ctx.fullConfig.audio_transcription?.enabled === true,
         field: "device",
         messageKey: "configMessages.audioTranscription.genaiProviderSelected",
         severity: "info",

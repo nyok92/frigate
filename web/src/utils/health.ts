@@ -581,7 +581,7 @@ function enrichmentSpecs(config: FrigateConfig): EnrichmentSpec[] {
       enabled: config.audio_transcription.enabled || anyCameraTranscribes,
       requested: config.audio_transcription.device ?? "CPU",
       explicit: true,
-      remote: config.audio_transcription.model !== "whisper",
+      remote: false,
       nvidiaOnly: true,
       presenceOnly: true,
     },

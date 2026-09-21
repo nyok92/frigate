@@ -24,7 +24,7 @@ import {
 } from "react";
 import { useForm } from "react-hook-form";
 import { LuCheck, LuExternalLink, LuX } from "react-icons/lu";
-import { ConfigFieldMessage } from "../ConfigFieldMessage";
+import { CiCircleAlert } from "react-icons/ci";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import useSWR from "swr";
@@ -44,7 +44,8 @@ import {
 import { formatUnixTimestampToDateTime } from "@/utils/dateUtil";
 import { use24HourTime } from "@/hooks/use-date-utils";
 import FilterSwitch from "@/components/filter/FilterSwitch";
-import { useTranslation } from "react-i18next";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Trans, useTranslation } from "react-i18next";
 import { useDateLocale } from "@/hooks/use-date-locale";
 import { useDocDomain } from "@/hooks/use-doc-domain";
 import { isPWA } from "@/utils/isPWA";
@@ -466,19 +467,37 @@ export default function NotificationsSettingsExtras({
                 </div>
               </div>
 
-              <ConfigFieldMessage
-                messageKey={
-                  requiresPwaInstall
-                    ? "notification.notificationUnavailable.descPwa"
-                    : "notification.notificationUnavailable.desc"
-                }
-                severity="warning"
-                docLink={
-                  requiresPwaInstall
-                    ? "configuration/notifications"
-                    : "configuration/authentication"
-                }
-              />
+              <Alert variant="destructive">
+                <CiCircleAlert className="size-5" />
+                <AlertTitle>
+                  {t("notification.notificationUnavailable.title")}
+                </AlertTitle>
+                <AlertDescription>
+                  <Trans
+                    ns="views/settings"
+                    i18nKey={
+                      requiresPwaInstall
+                        ? "notification.notificationUnavailable.descPwa"
+                        : "notification.notificationUnavailable.desc"
+                    }
+                  />
+                  <div className="mt-3 flex items-center">
+                    <Link
+                      to={getLocaleDocUrl(
+                        requiresPwaInstall
+                          ? "configuration/notifications"
+                          : "configuration/authentication",
+                      )}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline"
+                    >
+                      {t("readTheDocumentation", { ns: "common" })}{" "}
+                      <LuExternalLink className="ml-2 inline-flex size-3" />
+                    </Link>
+                  </div>
+                </AlertDescription>
+              </Alert>
             </div>
           </SettingsGroupCard>
         </div>

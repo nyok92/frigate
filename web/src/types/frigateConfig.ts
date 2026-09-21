@@ -451,9 +451,6 @@ export interface FrigateConfig {
   audio_transcription: {
     enabled: boolean;
     device: "GPU" | "CPU";
-    model: "whisper" | string;
-    model_size: "small" | "large" | null;
-    language: string | null;
   };
 
   auth: {
