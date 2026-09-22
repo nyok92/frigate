@@ -44,17 +44,6 @@ jobs:
           tags: |
             ${{ steps.setup.outputs.image-name }}-standard-arm64
           cache-from: type=registry,ref=${{ steps.setup.outputs.cache-name }}-arm64
-      - name: Build and push arm64 standard build
-        uses: docker/build-push-action@v7
-        with:
-          context: .
-          file: docker/main/Dockerfile
-          push: true
-          platforms: linux/arm64
-          target: frigate
-          tags: |
-            ${{ steps.setup.outputs.image-name }}-standard-arm64
-          cache-from: type=registry,ref=${{ steps.setup.outputs.cache-name }}-arm64
             *.cache-from=type=registry,ref=${{ steps.setup.outputs.cache-name }}-arm64
             *.cache-to=type=registry,ref=${{ steps.setup.outputs.cache-name }}-arm64,mode=max
  
