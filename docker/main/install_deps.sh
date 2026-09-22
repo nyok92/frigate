@@ -21,7 +21,8 @@ apt-get -qq install --no-install-recommends -y \
     libglib2.0-0 \
     libusb-1.0.0 \
     python3-h2 \
-    libgomp1  # memryx detector
+    libgomp1 \ # memryx detector
+    v4l-utils
 
 update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.11 1
 
@@ -49,6 +50,13 @@ if [[ "${TARGETARCH}" == "arm64" ]]; then
         apt-get -qq update
         apt-get -qq install --no-install-recommends --no-install-suggests -y mesa-teflon-delegate/bookworm-backports
     fi
+fi
+
+# install mesa-teflon-delegate
+# Only available for arm64 at the moment
+if [[ "${TARGETARCH}" == "arm64" ]]; then
+    mkdir -p /usr/lib/teflon
+    wget -qO /usr/lib/teflon/libteflon.so https://github.com/jimmyhon/frigate-builds/releases/download/mesa-26.1.5/libteflon.so
 fi
 
 # sha256 digests of the ffmpeg builds, keyed "<install dir>-<arch>".
@@ -86,6 +94,14 @@ if [[ "${TARGETARCH}" == "arm64" ]]; then
     install_ffmpeg 5.0 "https://github.com/NickM-27/FFmpeg-Builds/releases/download/autobuild-2022-07-31-12-37/ffmpeg-n5.1-2-g915ef932a3-linuxarm64-gpl-5.1.tar.xz"
     install_ffmpeg 7.0 "https://github.com/NickM-27/FFmpeg-Builds/releases/download/autobuild-2024-09-19-12-51/ffmpeg-n7.0.2-18-g3e6cec1286-linuxarm64-gpl-7.0.tar.xz"
     install_ffmpeg 8.0 "https://github.com/NickM-27/FFmpeg-Builds/releases/download/autobuild-2026-06-02-14-20/ffmpeg-n8.1.1-9-g58d4114d36-linuxarm64-gpl-8.1.tar.xz"
+    mkdir -p /usr/lib/ffmpeg/custom/bin
+    wget -qO ffmpeg.zip "https://github.com/jimmyhon/frigate-builds/releases/download/ffmpeg-8.0.1/ffmpeg.zip"
+    unzip ffmpeg.zip 
+    mv ffmpeg /usr/lib/ffmpeg/custom/bin/ffmpeg
+    mv ffprobe /usr/lib/ffmpeg/custom/bin/ffprobe
+    chmod +x /usr/lib/ffmpeg/custom/bin/ffmpeg
+    chmod +x /usr/lib/ffmpeg/custom/bin/ffprobe
+    rm -rf ffmpeg.zip
 fi
 
 # arch specific packages
