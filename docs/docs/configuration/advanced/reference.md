@@ -152,9 +152,10 @@ auth:
 models:
     # Optional: the camera environment this model is for (default: shown below)
     # Cameras select a model by setting detect -> scene to a matching value, and
-    # a model with a scene of all is used by any camera that does not set one.
-    # Valid values are all, indoor, outdoor, indoor_thermal, outdoor_thermal
-  - scene: all
+    # the model with a scene of default is used by any camera that does not set one.
+    # Any name made up of letters, numbers, _ and - is valid, such as thermal.
+    # Models that use the same model file are combined into one model.
+  - scene: default
     # Required: hardware this model runs on, as <detector> or <detector>:<device>
     # See https://docs.frigate.video/configuration/object_detectors for the
     # detectors available and the devices each one accepts. All of a model's
@@ -316,9 +317,9 @@ detect:
   # Optional: height of the frame for the input with the detect role (default: use native stream resolution)
   height: 720
   # Optional: the environment this camera looks at, which picks the model it runs on
-  # (default: the model with a scene of all)
-  # Valid values are all, indoor, outdoor, indoor_thermal, outdoor_thermal
-  scene: outdoor
+  # (default: the model with a scene of default)
+  # Must match the scene of a configured model
+  scene: thermal
   # Optional: desired fps for your camera for the input with the detect role (default: shown below)
   # NOTE: Recommended value of 5. Ideally, try and reduce your FPS on the camera.
   fps: 5
@@ -900,6 +901,21 @@ live:
   streams:
     main_stream: main_stream_name
     sub_stream: sub_stream_name
+  # Optional: Lower-quality live streams transcoded by go2rtc while someone is watching.
+  # NOTE: Set at the camera level only.
+  transcode:
+    # Optional: Enable transcoded streams (default: shown below)
+    enabled: False
+    # Optional: go2rtc stream to transcode (default: the first live stream)
+    source: main_stream_name
+    # Optional: One transcoded stream per quality (default: shown below)
+    qualities:
+      - height: 720
+        bitrate: 1200
+      - height: 480
+        bitrate: 500
+      - height: 360
+        bitrate: 250
   # Optional: Set the height of the jsmpeg stream. (default: 720)
   # This must be less than or equal to the height of the detect stream. Lower resolutions
   # reduce bandwidth required for viewing the jsmpeg stream. Width is computed to match known aspect ratio.
