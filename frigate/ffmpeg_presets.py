@@ -95,7 +95,7 @@ PRESETS_HW_ACCEL_DECODE = {
     f"{FFMPEG_HWACCEL_RKMPP}-no-dump_extra": "-hwaccel rkmpp -hwaccel_output_format drm_prime",
     # experimental presets
     FFMPEG_HWACCEL_VULKAN: "-hwaccel vulkan -init_hw_device vulkan=gpu:0 -filter_hw_device gpu -hwaccel_output_format vulkan",
-    "preset-v4l2request": "-hwaccel v4l2request -hwaccel_output_format drm_prime",
+    "preset-v4l2request": "-init_hw_device v4l2request:/dev/media0 -hwaccel v4l2request -hwaccel_output_format drm_prime",
     FFMPEG_HWACCEL_AMF: "-hwaccel amf -init_hw_device amf=gpu:0 -filter_hw_device gpu -hwaccel_output_format amf",
 }
 PRESETS_HW_ACCEL_DECODE["preset-nvidia-h264"] = PRESETS_HW_ACCEL_DECODE[
