@@ -43,7 +43,7 @@ jobs:
           target: frigate
           tags: |
             ${{ steps.setup.outputs.image-name }}-standard-arm64
-            nyok92/frigate:latest
+            ghcr.io/nyok92/frigate:latest
           cache-from: type=registry,ref=${{ steps.setup.outputs.cache-name }}-arm64
             *.cache-from=type=registry,ref=${{ steps.setup.outputs.cache-name }}-arm64
             *.cache-to=type=registry,ref=${{ steps.setup.outputs.cache-name }}-arm64,mode=max
