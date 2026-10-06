@@ -305,7 +305,7 @@ def detect_rk3588() -> DetectionHardware | None:
     if not os.path.exists(f"{DEV_ROOT}/accel/accel0"):
         return None
 
-    units = [HardwareUnit(device="rk3588", label="rk3588")]
+    units = [HardwareUnit(device="teflon_tfl", label="rk3588")]
     return _hardware("rk3588", "teflon_tfl", "rk3588 NPU", units)
 
 
