@@ -300,6 +300,15 @@ def detect_rockchip() -> DetectionHardware | None:
     return _hardware("rknn", "rknn", f"Rockchip NPU ({soc.upper()})", units)
 
 
+def detect_rk3588() -> DetectionHardware | None:
+    """Find Rockchip NPU by its device node."""
+    if not os.path.exists(f"{DEV_ROOT}/accel/accel0"):
+        return None
+
+    units = [HardwareUnit(device="rk3588", label="rk3588")]
+    return _hardware("rk3588", "teflon_tfl", "rk3588 NPU", units)
+
+
 def detect_axengine() -> DetectionHardware | None:
     """Find an AXERA accelerator by its control device node."""
     if not os.path.exists(f"{DEV_ROOT}/axcl_host"):
@@ -350,6 +359,7 @@ PROBES = (
     detect_jetson,
     detect_amd_gpu,
     detect_rockchip,
+    detect_rk3588,
     detect_axengine,
     detect_synaptics,
     detect_lighter_ane,
