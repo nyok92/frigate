@@ -59,8 +59,8 @@ DETECTOR_KEY = "rocket"
 # linked in and it talks to /dev/accel via raw ioctls, so the only runtime deps are
 # libstdc++/libc (already in the Frigate image). The bundled Dockerfile installs it
 # here; override `delegate_path` to point elsewhere.
-DEFAULT_DELEGATE = "/usr/local/lib/libtflite_rocket.so"
-
+#DEFAULT_DELEGATE = "/usr/local/lib/libtflite_rocket.so"
+DEFAULT_DELEGATE = "/usr/lib/teflon/libteflon.so"
 
 class RocketDetectorConfig(BaseDetectorConfig):
     type: Literal[DETECTOR_KEY]
