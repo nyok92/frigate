@@ -337,6 +337,15 @@ def detect_cpu() -> DetectionHardware:
     return _hardware("cpu", "cpu", "CPU", units)
 
 
+
+def detect_rocket() -> DetectionHardware | None:
+    """Find Rockchip NPU by its device node."""
+    if not os.path.exists(f"{DEV_ROOT}/accel/accel0"):
+        return None
+
+    units = [HardwareUnit(device="rocket", label="rocket")]
+    return _hardware("rocket", "rocket", "rk3588 NPU", units)
+    
 # ordered so accelerators are offered ahead of the CPU fallback
 PROBES = (
     detect_coral_pci,
@@ -354,6 +363,7 @@ PROBES = (
     detect_synaptics,
     detect_lighter_ane,
     detect_cpu,
+    detect_rocket,
 )
 
 
