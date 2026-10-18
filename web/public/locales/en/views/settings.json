@@ -1041,7 +1041,8 @@
     "title": "Users",
     "management": {
       "title": "User Management",
-      "desc": "Manage this Frigate instance's user accounts."
+      "desc": "Manage this Frigate instance's user accounts.",
+      "authDisabled": "Built-in authentication is disabled. These accounts are only used to log in once it's enabled."
     },
     "addUser": "Add User",
     "updatePassword": "Reset Password",
@@ -1116,6 +1117,7 @@
         "title": "Create New User",
         "desc": "Add a new user account and specify a role for access to areas of the Frigate UI.",
         "usernameOnlyInclude": "Username may only include letters, numbers, . or _",
+        "usernameOnlyDots": "Username cannot contain only periods",
         "confirmPassword": "Please confirm your password"
       },
       "deleteUser": {
@@ -1309,6 +1311,7 @@
       "loadingAvailableModels": "Loading available models…",
       "selectModel": "Select a model",
       "noModelsAvailable": "No models available",
+      "showIncompatible": "Show incompatible models",
       "filter": {
         "ariaLabel": "Filter models by type",
         "baseModels": "Base Models",

@@ -62,6 +62,7 @@ from frigate.util.recording_coverage import (
     build_spans,
     null_audio_glitches,
     plan_clip,
+    recording_overlap,
     resolve_coverage,
 )
 from frigate.util.time import get_normalized_tz_name
@@ -296,10 +297,15 @@ async def latest_frame(
         and request.app.frigate_config.birdseye.enabled
         and request.app.frigate_config.birdseye.restream
     ):
-        frame = cv2.cvtColor(
-            frame_processor.get_current_frame(camera_name),
-            cv2.COLOR_YUV2BGR_I420,
-        )
+        frame = frame_processor.get_current_frame(camera_name)
+
+        if frame is None:
+            return JSONResponse(
+                content={"success": False, "message": "Unable to get valid frame"},
+                status_code=500,
+            )
+
+        frame = cv2.cvtColor(frame, cv2.COLOR_YUV2BGR_I420)
 
         height = int(params.height or str(frame.shape[0]))
         width = int(height * frame.shape[1] / frame.shape[0])
@@ -347,10 +353,7 @@ async def get_snapshot_from_recording(
                 Recordings.path,
                 Recordings.start_time,
             )
-            .where(
-                (frame_time >= Recordings.start_time)
-                & (frame_time <= Recordings.end_time)
-            )
+            .where(recording_overlap(frame_time, frame_time))
             .where(Recordings.camera == camera_name)
             .order_by(Recordings.stream_type.asc(), Recordings.start_time.desc())
             .limit(1)
@@ -366,10 +369,7 @@ async def get_snapshot_from_recording(
                     Recordings.path,
                     Recordings.start_time,
                 )
-                .where(
-                    (frame_time >= Recordings.start_time)
-                    & (frame_time <= Recordings.end_time)
-                )
+                .where(recording_overlap(frame_time, frame_time))
                 .where(Recordings.camera == camera_name)
                 .order_by(Recordings.stream_type.asc(), Recordings.start_time.desc())
                 .limit(1)
@@ -384,8 +384,13 @@ async def get_snapshot_from_recording(
         mime_type = "png" if format == "png" else "jpeg"
         config: FrigateConfig = request.app.frigate_config
 
-        image_data = get_image_from_recording(
-            config.ffmpeg, recording.path, time_in_segment, codec, height
+        image_data = await asyncio.to_thread(
+            get_image_from_recording,
+            config.ffmpeg,
+            recording.path,
+            time_in_segment,
+            codec,
+            height,
         )
 
         if not image_data:
@@ -427,9 +432,7 @@ async def submit_recording_snapshot_to_plus(
             Recordings.path,
             Recordings.start_time,
         )
-        .where(
-            (frame_time >= Recordings.start_time) & (frame_time <= Recordings.end_time)
-        )
+        .where(recording_overlap(frame_time, frame_time))
         .where(Recordings.camera == camera_name)
         .order_by(Recordings.stream_type.asc(), Recordings.start_time.desc())
         .limit(1)
@@ -439,8 +442,12 @@ async def submit_recording_snapshot_to_plus(
         config: FrigateConfig = request.app.frigate_config
         recording: Recordings = recording_query.get()
         time_in_segment = frame_time - recording.start_time
-        image_data = get_image_from_recording(
-            config.ffmpeg, recording.path, time_in_segment, "png"
+        image_data = await asyncio.to_thread(
+            get_image_from_recording,
+            config.ffmpeg,
+            recording.path,
+            time_in_segment,
+            "png",
         )
 
         if not image_data:
@@ -539,11 +546,7 @@ async def recording_clip(
                 Recordings.start_time,
                 Recordings.end_time,
             )
-            .where(
-                (Recordings.start_time.between(start_ts, end_ts))
-                | (Recordings.end_time.between(start_ts, end_ts))
-                | ((start_ts > Recordings.start_time) & (end_ts < Recordings.end_time))
-            )
+            .where(recording_overlap(start_ts, end_ts))
             .where(Recordings.camera == camera_name)
             .where(Recordings.stream_type == stream_type)
             .order_by(Recordings.start_time.asc())
