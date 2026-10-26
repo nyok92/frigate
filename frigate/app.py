@@ -622,6 +622,7 @@ class FrigateApp:
                     username="admin",
                     role="admin",
                     password_hash=password_hash,
+                    password_changed_at=datetime.datetime.now(),
                     notification_tokens=[],
                 ).execute()
 
@@ -730,6 +731,8 @@ class FrigateApp:
                 host="127.0.0.1",
                 port=5001,
                 log_level="error",
+                # outlive nginx's 60s upstream keepalive so nginx closes idle connections first
+                timeout_keep_alive=75,
             )
         finally:
             self.stop()
