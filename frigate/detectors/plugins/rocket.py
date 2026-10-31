@@ -59,8 +59,8 @@ DETECTOR_KEY = "rocket"
 # linked in and it talks to /dev/accel via raw ioctls, so the only runtime deps are
 # libstdc++/libc (already in the Frigate image). The bundled Dockerfile installs it
 # here; override `delegate_path` to point elsewhere.
-#DEFAULT_DELEGATE = "/usr/local/lib/libtflite_rocket.so"
-DEFAULT_DELEGATE = "/usr/lib/teflon/libteflon.so"
+DEFAULT_DELEGATE = "/usr/local/lib/libtflite_rocket.so"
+
 
 class RocketDetectorConfig(BaseDetectorConfig):
     type: Literal[DETECTOR_KEY]
@@ -121,8 +121,8 @@ class RocketDetector(DetectionApi):
         except (ValueError, OSError) as e:
             logger.error(
                 "Failed to load the rocket delegate from %s: %s. Check that the .so "
-                "exists in the container and that /dev/accel/accel0 is passed through "
-                "(devices:) with the host render group (group_add:).",
+                "exists in the container, that LD_PRELOAD names libtflite_cshim.so, and "
+                "that the .so was built for the image's glibc (TFLITE_ROCKET_PORTABLE_GLIBC).",
                 detector_config.delegate_path,
                 e,
             )
