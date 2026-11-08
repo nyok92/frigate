@@ -7,18 +7,18 @@ starlette-context == 0.5.*
 fastapi[standard-no-fastapi-cloud-cli] == 0.162.*
 uvicorn == 0.54.*
 slowapi == 0.1.*
-joserfc == 1.7.*
+joserfc == 1.8.*
 cryptography == 50.0.*
 pathvalidate == 3.3.*
 markupsafe == 3.0.*
-python-multipart == 0.0.32
+python-multipart == 0.0.33
 # Classification Model Training
 tensorflow == 2.19.* ; platform_machine == 'aarch64'
 tensorflow-cpu == 2.21.* ; platform_machine == 'x86_64'
 # General
 mypy == 2.4.1
 onvif-zeep-async == 4.3.*
-paho-mqtt == 2.1.*
+paho-mqtt == 2.2.*
 pandas == 3.0.*
 peewee == 4.5.*
 peewee_migrate == 2.3.*
@@ -26,7 +26,7 @@ psutil == 7.2.*
 pydantic == 2.14.*
 git+https://github.com/fbcotter/py3nvml#egg=py3nvml
 tzdata == 2026.6
-pyzmq == 27.2.*
+pyzmq == 27.3.*
 ruamel.yaml == 0.19.*
 tzlocal == 5.4.5
 requests == 2.34.*
@@ -49,7 +49,7 @@ transformers == 5.22.*
 # Generative AI
 google-genai == 2.34.*
 ollama == 0.6.*
-openai == 3.41.*
+openai == 3.46.*
 # push notifications
 py-vapid == 1.9.6
 pywebpush == 2.5.*

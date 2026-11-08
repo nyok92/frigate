@@ -46,14 +46,14 @@ DROPPED_DETECTOR_OPTIONS = {
 }
 
 
-# Trees the unprivileged runtime user can write. A root frigate service must
-# not execute a binary from any of them; a compromised uid-1000 process could
+# Trees the unprivileged runtime user can write. A root service must not
+# execute a binary from any of them; a compromised uid-1000 process could
 # plant one and be root after the next restart.
 RUNTIME_USER_WRITABLE_DIRS = (CONFIG_DIR, BASE_DIR, CACHE_DIR, "/dev/shm", "/tmp")
 
 
-def frigate_service_is_granular_root() -> bool:
-    """Report whether FRIGATE_ROOT_SERVICES runs frigate as root.
+def service_is_granular_root(service: str) -> bool:
+    """Report whether FRIGATE_ROOT_SERVICES runs the given service as root.
 
     The escape hatch is excluded: it never sweeps /config and leaves no
     unprivileged service running, so custom binaries stay as safe as they
@@ -66,7 +66,7 @@ def frigate_service_is_granular_root() -> bool:
         return False
 
     entries = os.environ.get("FRIGATE_ROOT_SERVICES", "").split(",")
-    return any("".join(entry.split()) == "frigate" for entry in entries)
+    return any("".join(entry.split()) == service for entry in entries)
 
 
 def is_runtime_user_writable(path: str) -> bool:
@@ -79,35 +79,57 @@ def is_runtime_user_writable(path: str) -> bool:
 
 
 @cache
-def _warn_ignored_ffmpeg_path(path: str) -> None:
+def _warn_ignored_ffmpeg_path(path: str, service: str) -> None:
     """Warn once per path; resolution runs per camera and per binary."""
     logger.warning(
-        "Ignoring ffmpeg.path %s because FRIGATE_ROOT_SERVICES runs frigate as root and that location is writable by the unprivileged user; using the bundled build",
+        "Ignoring ffmpeg.path %s because FRIGATE_ROOT_SERVICES runs %s as root and that location is writable by the unprivileged user; using the bundled build",
         path,
+        service,
     )
 
 
-def resolve_ffmpeg_path(path: str, binary: str = "ffmpeg") -> str:
+# ffmpeg commands are built as strings and split on whitespace, so a custom path
+# must stay a single plain token
+_CUSTOM_FFMPEG_PATH = re.compile(r"/[\w.+@/-]+")
+
+
+def is_valid_ffmpeg_path(path: str) -> bool:
+    """Check that a custom ffmpeg path has no whitespace, quotes or shell syntax."""
+    return not path.startswith("/") or _CUSTOM_FFMPEG_PATH.fullmatch(path) is not None
+
+
+def resolve_ffmpeg_path(
+    path: str, binary: str = "ffmpeg", service: str = "frigate"
+) -> str:
     """Resolve an ffmpeg version alias or custom path to a binary path.
 
     A bare version alias that is no longer bundled (for example one that was
     dropped when the default version changed) falls back to the default
     bundled version so existing configs keep working across an upgrade or a
-    revert. Custom install paths (anything absolute) are used as-is, except
-    one in a runtime-user-writable tree while FRIGATE_ROOT_SERVICES makes
-    frigate root; see RUNTIME_USER_WRITABLE_DIRS.
+    revert. Custom install paths (anything absolute) are used as-is. While
+    FRIGATE_ROOT_SERVICES makes the service that execs it root, a custom path
+    is resolved to its real location and refused inside a runtime-user-writable
+    tree; see RUNTIME_USER_WRITABLE_DIRS. Paths that fail
+    `is_valid_ffmpeg_path` also fall back to the default.
     """
-    if path == "default" or (
-        not path.startswith("/") and path not in INCLUDED_FFMPEG_VERSIONS
+    if (
+        path == "default"
+        or not is_valid_ffmpeg_path(path)
+        or (not path.startswith("/") and path not in INCLUDED_FFMPEG_VERSIONS)
     ):
         version = DEFAULT_FFMPEG_VERSION
     elif path in INCLUDED_FFMPEG_VERSIONS:
         version = path
+    elif not service_is_granular_root(service):
+        return f"{path}/bin/{binary}"
     else:
-        if not (frigate_service_is_granular_root() and is_runtime_user_writable(path)):
-            return f"{path}/bin/{binary}"
+        # return the resolved form so a link in the path cannot be retargeted
+        # after the check
+        real = os.path.realpath(f"{path}/bin/{binary}")
+        if is_valid_ffmpeg_path(real) and not is_runtime_user_writable(real):
+            return real
 
-        _warn_ignored_ffmpeg_path(path)
+        _warn_ignored_ffmpeg_path(path, service)
         version = DEFAULT_FFMPEG_VERSION
 
     return f"/usr/lib/ffmpeg/{version}/bin/{binary}"

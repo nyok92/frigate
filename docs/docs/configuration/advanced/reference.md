@@ -240,7 +240,7 @@ logger:
 
 # Optional: set environment variables
 environment_vars:
-  EXAMPLE_VAR: value
+  LIBVA_DRIVER_NAME: i965
 
 # Optional: birdseye configuration
 # NOTE: Can (enabled, mode) be overridden at the camera level
@@ -1218,6 +1218,9 @@ ui:
 
 # Optional: Telemetry configuration
 telemetry:
+  # Optional: Share one anonymous usage report a day (default: shown below)
+  # NOTE: See https://docs.frigate.video/configuration/advanced/analytics for what is sent
+  analytics: False
   # Optional: Enabled network interfaces for bandwidth stats monitoring (default: empty list, let nethogs search all)
   network_interfaces:
     - eth
