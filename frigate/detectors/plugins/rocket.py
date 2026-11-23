@@ -34,7 +34,7 @@ from typing_extensions import Literal
 
 from frigate.detectors.detection_api import DetectionApi
 from frigate.detectors.detector_config import BaseDetectorConfig, ModelTypeEnum
-from frigate.detectors.detector_utils import tflite_detect_raw, tflite_init
+from frigate.detectors.detector_utils import TFLiteDetectionModel
 
 try:
     from tflite_runtime.interpreter import Interpreter, load_delegate
@@ -151,7 +151,9 @@ class RocketDetector(DetectionApi):
             **kw,
         )
 
-        tflite_init(self, interpreter)
+        self.tflite_model = TFLiteDetectionModel(
+            interpreter, detector_config.model, DETECTOR_KEY
+        )
 
     def detect_raw(self, tensor_input):
-        return tflite_detect_raw(self, tensor_input)
+        return self.tflite_model.detect_raw(tensor_input)
