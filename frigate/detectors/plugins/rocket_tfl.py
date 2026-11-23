@@ -53,7 +53,7 @@ except ModuleNotFoundError:
 
 logger = logging.getLogger(__name__)
 
-DETECTOR_KEY = "rocket"
+DETECTOR_KEY = "rocket_tfl"
 
 # The delegate ships as a single self-contained .so: librocketnpu is statically
 # linked in and it talks to /dev/accel via raw ioctls, so the only runtime deps are
