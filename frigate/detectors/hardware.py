@@ -343,14 +343,6 @@ def detect_lighter_ane() -> DetectionHardware | None:
     units = [HardwareUnit(device="onnx", label="Neural Engine")]
     return _hardware("onnx:lighter", "onnx", "Apple Neural Engine", units)
 
-
-def detect_cpu() -> DetectionHardware:
-    """The CPU, which is always available."""
-    units = [HardwareUnit(device="cpu", label="CPU")]
-    return _hardware("cpu", "cpu", "CPU", units)
-
-
-
 def detect_rocket() -> DetectionHardware | None:
     """Find Rockchip NPU by its device node."""
     if not os.path.exists(f"{DEV_ROOT}/accel/accel0"):
@@ -358,6 +350,12 @@ def detect_rocket() -> DetectionHardware | None:
 
     units = [HardwareUnit(device="rocket", label="rocket")]
     return _hardware("rocket", "rocket", "rk3588 NPU", units)
+    
+def detect_cpu() -> DetectionHardware:
+    """The CPU, which is always available."""
+    units = [HardwareUnit(device="cpu", label="CPU")]
+    return _hardware("cpu", "cpu", "CPU", units)
+
     
 # ordered so accelerators are offered ahead of the CPU fallback
 PROBES = (
