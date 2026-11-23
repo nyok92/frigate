@@ -5,21 +5,21 @@ rocket.py — Frigate detector plugin for the RK3588 NPU via the tflite-rocket
 external delegate.
 
 Drop this file into Frigate's ``frigate/detectors/plugins/`` directory (the bundled
-Dockerfile does this) and it auto-registers a ``rocket`` detector: Frigate's plugin
+Dockerfile does this) and it auto-registers a ``rocket_tfl`` detector: Frigate's plugin
 loader imports every module under that package and indexes ``DetectionApi``
 subclasses by ``type_key``, and builds the config union from
 ``BaseDetectorConfig`` subclasses — so no other Frigate change is needed.
 
-The plugin is a thin adapter. It loads an unmodified SSD ``.tflite`` (Frigate's
-default SSDLite-MobileDet) with the tflite-rocket delegate
+The plugin is a thin adapter. It loads an unmodified ``.tflite`` (Frigate's
+default SSDLite-MobileDet, or an int8-quantized YOLO model) with the tflite-rocket delegate
 (``libtflite_rocket.so``), which runs the convolutional backbone on the NPU; the
 SSD ``TFLite_Detection_PostProcess`` op is a custom op and stays on the CPU.
-Detection output is byte-for-byte Frigate's standard SSD path
-(``frigate.detectors.detector_utils.tflite_detect_raw``), so the detector behaves
-exactly like the built-in ``cpu``/``edgetpu`` SSD detectors.
+Pre/post-processing is Frigate's shared ``TFLiteDetectionModel``
+(``frigate.detectors.detector_utils``), so SSD and ``yolo-generic`` models behave
+exactly as on the built-in ``cpu``/``teflon_tfl`` detectors.
 
 Multi-camera throughput: Frigate runs one OS process per configured detector, so
-configuring several ``rocket`` detectors each with a distinct ``device`` (a big A76
+configuring several ``rocket_tfl`` detectors each with a distinct ``device`` (a big A76
 core, ``"4"``..``"7"``) and ``num_threads: 1`` spreads that many independent NPU
 contexts across the four A76 cores. A single detector with ``num_threads: 4`` fans
 one inference across the NPU cores for the lowest single-stream latency.
@@ -33,7 +33,7 @@ from pydantic import Field
 from typing_extensions import Literal
 
 from frigate.detectors.detection_api import DetectionApi
-from frigate.detectors.detector_config import BaseDetectorConfig, ModelTypeEnum
+from frigate.detectors.detector_config import BaseDetectorConfig
 from frigate.detectors.detector_utils import TFLiteDetectionModel
 
 try:
@@ -101,7 +101,7 @@ class RocketDetectorConfig(BaseDetectorConfig):
 
 class RocketDetector(DetectionApi):
     type_key = DETECTOR_KEY
-    supported_models = [ModelTypeEnum.ssd]
+    supported_models = TFLiteDetectionModel.supported_models
 
     def __init__(self, detector_config: RocketDetectorConfig):
         # Each Frigate detector runs in its own process, so the affinity env set here
