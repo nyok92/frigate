@@ -348,8 +348,8 @@ def detect_rocket() -> DetectionHardware | None:
     if not os.path.exists(f"{DEV_ROOT}/accel/accel0"):
         return None
 
-    units = [HardwareUnit(device="rocket", label="rocket")]
-    return _hardware("rocket", "rocket", "rk3588 NPU", units)
+    units = [HardwareUnit(device="rocket_tfl", label="rocket")]
+    return _hardware("rocket", "rocket_tfl", "rk3588 NPU", units)
     
 def detect_cpu() -> DetectionHardware:
     """The CPU, which is always available."""
