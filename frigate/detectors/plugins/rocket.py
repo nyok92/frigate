@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: GPL-3.0-or-later
+# SPDX-License-Identifier: MIT
 # Copyright (C) 2026 The tflite-rocket authors
 """
 rocket.py — Frigate detector plugin for the RK3588 NPU via the tflite-rocket
@@ -59,7 +59,7 @@ DETECTOR_KEY = "rocket"
 # linked in and it talks to /dev/accel via raw ioctls, so the only runtime deps are
 # libstdc++/libc (already in the Frigate image). The bundled Dockerfile installs it
 # here; override `delegate_path` to point elsewhere.
-DEFAULT_DELEGATE = "usr/lib/teflon/libteflon.so"
+DEFAULT_DELEGATE = "/usr/lib/teflon/libteflon.so"
 
 
 class RocketDetectorConfig(BaseDetectorConfig):
